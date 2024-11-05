@@ -11,7 +11,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   final TextEditingController _controller = TextEditingController();
-  Future<String>? _city;
+  Future<String>? _getCityFromZip;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class _MainScreenState extends State<MainScreen> {
               const SizedBox(height: 32),
               OutlinedButton(
                 onPressed: () {setState(() {
-                    _city = getCityFromZip(_controller.text);
+                    _getCityFromZip = getCityFromZip(_controller.text);
                   });
                 },
                 child: const Text("Suche"),
@@ -38,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
               const SizedBox(height: 32),
 
               FutureBuilder(
-                  future: getCityFromZip("City"),
+                  future: _getCityFromZip,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
@@ -68,6 +68,10 @@ class _MainScreenState extends State<MainScreen> {
     await Future.delayed(const Duration(seconds: 3));
 
     switch (zip) {
+      case "34":
+        return "Istanbul";
+      case "61":
+        return "Trabzon";
       case "10115":
         return 'Berlin';
       case "20095":
